@@ -5,13 +5,20 @@ export default function Footer() {
   return (
     <footer className="bg-black border-t border-gold">
       <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-5 gap-6">
           {/* Company Info */}
           <div className="space-y-4">
             <h3 className="text-2xl font-bold logo-font text-gold">MH CAR CLEANING</h3>
-            <p className="text-gray-300">
+            <p className="text-gray-300 mb-4">
               Professionele auto detailing service in Opheusden. Wij maken uw auto grondig schoon, zowel van binnen als van buiten!
             </p>
+            <div className="space-y-2 text-sm text-gray-400">
+              <p>✓ Premium producten & technieken</p>
+              <p>✓ Ervaren specialisten</p>
+              <p>✓ Service op afspraak</p>
+              <p>✓ Scherpe prijzen vanaf €80</p>
+              <p>✓ Betuwe & omgeving</p>
+            </div>
           </div>
 
           {/* Contact Info */}
@@ -62,6 +69,22 @@ export default function Footer() {
               </p>
             </div>
           </div>
+
+          {/* Service Area */}
+          <div className="space-y-4">
+            <h4 className="text-lg font-semibold text-white">Werkgebied</h4>
+            <div className="space-y-1 text-gray-300 text-sm">
+              <p>• Opheusden</p>
+              <p>• Wageningen</p>
+              <p>• Rhenen</p>
+              <p>• Kesteren</p>
+              <p>• Elst</p>
+              <p>• Betuwe</p>
+              <p className="text-xs text-gray-400 mt-2">
+                En omliggende plaatsen
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Navigation Links */}
@@ -81,6 +104,9 @@ export default function Footer() {
             </Link>
             <Link href="/afspraak" className="text-gray-300 hover:text-gold transition-colors">
               Afspraak
+            </Link>
+            <Link href="/contact" className="text-gray-300 hover:text-gold transition-colors">
+              Contact
             </Link>
           </div>
 

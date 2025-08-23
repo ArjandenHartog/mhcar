@@ -14,8 +14,11 @@ export default function Home() {
             <h1 className="text-4xl md:text-6xl font-bold mb-6 logo-font">
               MH CAR CLEANING
             </h1>
-            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-              Wij maken uw auto grondig schoon, zowel van de binnenkant als de buitenkant!
+            <p className="text-xl md:text-2xl mb-4 max-w-3xl mx-auto">
+              Professionele Auto Detailing Service in Opheusden en Omgeving
+            </p>
+            <p className="text-lg mb-8 max-w-4xl mx-auto text-gray-300">
+              Wij maken uw auto grondig schoon met premium producten en professionele technieken. Van exterieur detailing tot interieur reiniging en beschermende coatings - uw auto verdient de beste zorg.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-gold text-black hover:bg-yellow-600">
@@ -97,6 +100,91 @@ export default function Home() {
             <p className="text-sm text-gray-400">
               *Let op: tarieven kunnen wisselend zijn per auto, afhankelijk van de grootte van de auto.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* About & SEO Section */}
+      <section className="py-20 bg-black">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+                Waarom Kiezen voor MH Car Cleaning?
+              </h2>
+              <p className="text-lg text-gray-300 mb-8">
+                Al jaren de vertrouwde auto detailing specialist in Opheusden en omgeving
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-12 mb-16">
+              <div>
+                <h3 className="text-2xl font-bold text-gold mb-4">Professionele Auto Detailing</h3>
+                <p className="text-gray-300 mb-4">
+                  Bij MH Car Cleaning bent u verzekerd van professionele auto detailing services. Onze ervaren specialisten 
+                  gebruiken uitsluitend premium producten en moderne technieken om uw voertuig de allerbeste zorg te geven.
+                </p>
+                <p className="text-gray-300">
+                  Of het nu gaat om een grondige exterieur reiniging, diepgaande interieur detailing of beschermende coating services - 
+                  wij zorgen ervoor dat uw auto er weer als nieuw uitziet.
+                </p>
+              </div>
+              
+              <div>
+                <h3 className="text-2xl font-bold text-gold mb-4">Lokale Service in Opheusden</h3>
+                <p className="text-gray-300 mb-4">
+                  Als lokale auto detailing specialist bedienen wij Opheusden en de gehele omgeving, waaronder Wageningen, 
+                  Rhenen, Kesteren en Elst. Onze centrale ligging maakt ons goed bereikbaar voor autoliefhebbers uit de hele regio.
+                </p>
+                <p className="text-gray-300">
+                  Service op afspraak zorgt ervoor dat u altijd persoonlijke aandacht krijgt en uw auto de tijd en zorg krijgt die het verdient.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-neutral-900 rounded-lg p-8 mb-12">
+              <h3 className="text-2xl font-bold text-gold mb-6 text-center">Onze Specialiteiten</h3>
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="text-center">
+                  <h4 className="font-semibold text-white mb-2">Exterieur Detailing</h4>
+                  <p className="text-gray-300 text-sm">Grondige reiniging van lak, velgen, ramen en alle exterieur onderdelen</p>
+                </div>
+                <div className="text-center">
+                  <h4 className="font-semibold text-white mb-2">Interieur Reiniging</h4>
+                  <p className="text-gray-300 text-sm">Diepgaande reiniging van stoelen, dashboard, tapijt en alle interieur oppervlakken</p>
+                </div>
+                <div className="text-center">
+                  <h4 className="font-semibold text-white mb-2">Coating Services</h4>
+                  <p className="text-gray-300 text-sm">Beschermende coatings voor langdurige glans en bescherming tegen invloeden</p>
+                </div>
+                <div className="text-center">
+                  <h4 className="font-semibold text-white mb-2">Custom Pakketten</h4>
+                  <p className="text-gray-300 text-sm">Op maat gemaakte servicepakketten voor uw specifieke wensen en budget</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <h3 className="text-2xl font-bold text-white mb-4">Werkgebied & Service</h3>
+              <p className="text-gray-300 mb-6">
+                Wij bedienen auto-eigenaren in Opheusden, Wageningen, Rhenen, Kesteren, Elst, Herveld, Randwijk en de gehele Betuwe. 
+                Onze professionele auto detailing services zijn beschikbaar op afspraak, zodat u altijd verzekerd bent van persoonlijke aandacht 
+                en de beste service voor uw voertuig.
+              </p>
+              <div className="flex flex-wrap justify-center gap-4 text-sm text-gold">
+                <span>Opheusden</span>
+                <span>•</span>
+                <span>Wageningen</span>
+                <span>•</span>
+                <span>Rhenen</span>
+                <span>•</span>
+                <span>Kesteren</span>
+                <span>•</span>
+                <span>Elst</span>
+                <span>•</span>
+                <span>Betuwe</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>

@@ -153,8 +153,12 @@ export default function AfspraakPage() {
       <section className="bg-black text-white py-20 border-b border-gold">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 logo-font">AFSPRAAK MAKEN</h1>
-          <p className="text-xl md:text-2xl max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl mb-4 max-w-3xl mx-auto">
             Plan uw auto detailing service op een moment dat u uitkomt
+          </p>
+          <p className="text-lg max-w-4xl mx-auto text-gray-300">
+            Professionele auto detailing services in Opheusden en omgeving. Kies uw gewenste datum, tijd en servicepakket. 
+            Wij nemen binnen 24 uur contact op voor bevestiging van uw afspraak.
           </p>
         </div>
       </section>
