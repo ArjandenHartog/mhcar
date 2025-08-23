@@ -176,17 +176,14 @@ export default function AfspraakPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="bg-neutral-900 p-4 rounded-lg border border-neutral-600">
-                    <Calendar
-                      mode="single"
-                      selected={date}
-                      onSelect={setDate}
-                      disabled={(date) => date < new Date() || date.getDay() === 0}
-                      locale={nl}
-                      className="w-full text-white"
-                      captionLayout="dropdown"
-                    />
-                  </div>
+                  <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={setDate}
+                    disabled={(date) => date < new Date() || date.getDay() === 0}
+                    locale={nl}
+                    className="w-full"
+                  />
                   {date && (
                     <p className="mt-4 text-sm text-gold">
                       Geselecteerd: {format(date, 'EEEE d MMMM yyyy', { locale: nl })}
