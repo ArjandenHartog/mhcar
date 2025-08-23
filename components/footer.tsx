@@ -106,9 +106,20 @@ export default function Footer() {
                 </svg>
               </a>
             </div>
-            <p className="text-gray-400 text-sm">
-              © 2025 MH Car Cleaning. Alle rechten voorbehouden.
-            </p>
+            <div className="flex flex-col md:flex-row gap-2 md:gap-4 items-center text-gray-400 text-sm">
+              <p>© 2025 MH Car Cleaning. Alle rechten voorbehouden.</p>
+              <p>
+                Made by{' '}
+                <a 
+                  href="https://arjandenhartog.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gold hover:text-yellow-400 transition-colors"
+                >
+                  Arjan
+                </a>
+              </p>
+            </div>
           </div>
         </div>
       </div>

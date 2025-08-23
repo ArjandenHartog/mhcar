@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { CalendarDays, Clock, User, Phone, Car } from "lucide-react"
 import { format } from "date-fns"
 import { nl } from "date-fns/locale"
+import { cn } from "@/lib/utils"
 
 export default function AfspraakPage() {
   const [date, setDate] = useState<Date>()
@@ -175,37 +176,17 @@ export default function AfspraakPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Calendar
-                    mode="single"
-                    selected={date}
-                    onSelect={setDate}
-                    disabled={(date) => date < new Date() || date.getDay() === 0}
-                    locale={nl}
-                    className="rounded-md border border-neutral-600 shadow-sm bg-neutral-900"
-                    captionLayout="dropdown"
-                    classNames={{
-                      months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
-                      month: "space-y-4",
-                      caption: "flex justify-center pt-1 relative items-center text-white",
-                      caption_label: "text-sm font-medium text-white",
-                      nav: "space-x-1 flex items-center",
-                      nav_button: "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 text-white",
-                      nav_button_previous: "absolute left-1",
-                      nav_button_next: "absolute right-1",
-                      table: "w-full border-collapse space-y-1",
-                      head_row: "flex",
-                      head_cell: "text-neutral-400 rounded-md w-8 font-normal text-[0.8rem]",
-                      row: "flex w-full mt-2",
-                      cell: "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent",
-                      day: "h-8 w-8 p-0 font-normal aria-selected:opacity-100 text-white hover:bg-neutral-700 rounded-md transition-colors",
-                      day_selected: "bg-gold text-black hover:bg-yellow-600 hover:text-black focus:bg-gold focus:text-black",
-                      day_today: "bg-neutral-700 text-white",
-                      day_outside: "text-neutral-500 opacity-50",
-                      day_disabled: "text-neutral-500 opacity-50",
-                      day_range_middle: "aria-selected:bg-accent aria-selected:text-accent-foreground",
-                      day_hidden: "invisible",
-                    }}
-                  />
+                  <div className="bg-neutral-900 p-4 rounded-lg border border-neutral-600">
+                    <Calendar
+                      mode="single"
+                      selected={date}
+                      onSelect={setDate}
+                      disabled={(date) => date < new Date() || date.getDay() === 0}
+                      locale={nl}
+                      className="w-full text-white"
+                      captionLayout="dropdown"
+                    />
+                  </div>
                   {date && (
                     <p className="mt-4 text-sm text-gold">
                       Geselecteerd: {format(date, 'EEEE d MMMM yyyy', { locale: nl })}
@@ -235,7 +216,7 @@ export default function AfspraakPage() {
                         className={
                           formData.time === time 
                             ? "bg-gold text-black hover:bg-yellow-600" 
-                            : "border-neutral-600 text-gray-300 hover:bg-neutral-800"
+                            : "border-gold text-gold hover:bg-gold hover:text-black transition-colors"
                         }
                         onClick={() => setFormData({ ...formData, time })}
                       >

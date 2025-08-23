@@ -96,3 +96,53 @@
 .hover-text-black:hover {
   color: #000000;
 }
+
+/* Calendar custom styling */
+[data-slot="calendar"] {
+  @apply text-white;
+}
+
+[data-slot="calendar"] .rdp-month_caption {
+  @apply text-white;
+}
+
+[data-slot="calendar"] .rdp-weekday {
+  @apply text-neutral-400;
+}
+
+[data-slot="calendar"] .rdp-day {
+  @apply text-white;
+}
+
+[data-slot="calendar"] .rdp-day:hover {
+  @apply bg-neutral-700;
+}
+
+[data-slot="calendar"] .rdp-day_selected {
+  @apply bg-gold text-black;
+}
+
+[data-slot="calendar"] .rdp-day_selected:hover {
+  @apply bg-yellow-600 text-black;
+}
+
+[data-slot="calendar"] .rdp-day_today:not(.rdp-day_selected) {
+  @apply bg-neutral-700 text-white;
+}
+
+[data-slot="calendar"] .rdp-day_outside {
+  @apply text-neutral-500 opacity-50;
+}
+
+[data-slot="calendar"] .rdp-day_disabled {
+  @apply text-neutral-500 opacity-50;
+}
+
+[data-slot="calendar"] .rdp-button_previous,
+[data-slot="calendar"] .rdp-button_next {
+  @apply text-white hover:bg-neutral-700;
+}
+
+[data-slot="calendar"] .rdp-dropdown {
+  @apply text-white bg-neutral-800 border-neutral-600;
+}
