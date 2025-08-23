@@ -14,20 +14,18 @@ export default function LocationMap() {
         
         <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {/* Map */}
-          <Card className="bg-black border-neutral-700 overflow-hidden">
-            <CardContent className="p-0">
-              <div className="aspect-video">
-                <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2431.9999999999995!2d5.5960335!3d51.9333382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xab03563387717c27%3A0xdc364934eb38ad18!2sMH%20Car%20Cleaning%20Opheusden!5e0!3m2!1sen!2snl!4v1693234567890!5m2!1sen!2snl"
-                  width="100%" 
-                  height="100%" 
-                  style={{ border: 0 }}
-                  allowFullScreen={true}
-                  loading="lazy" 
-                  referrerPolicy="no-referrer-when-downgrade"
-                  className="rounded-lg"
-                />
-              </div>
+          <Card className="bg-black border-neutral-700 overflow-hidden h-full">
+            <CardContent className="p-0 h-full">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2431.9999999999995!2d5.5960335!3d51.9333382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xab03563387717c27%3A0xdc364934eb38ad18!2sMH%20Car%20Cleaning%20Opheusden!5e0!3m2!1sen!2snl!4v1693234567890!5m2!1sen!2snl"
+                width="100%" 
+                height="100%" 
+                style={{ border: 0 }}
+                allowFullScreen={true}
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+                className="w-full h-full min-h-[400px]"
+              />
             </CardContent>
           </Card>
 
