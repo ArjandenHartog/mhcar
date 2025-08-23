@@ -11,7 +11,7 @@ export const client = createClient({
 
 const builder = imageUrlBuilder(client)
 
-export const urlFor = (source: any) => {
+export const urlFor = (source: { asset: { _ref: string; _type: string } }) => {
   return builder.image(source)
 }
 
@@ -21,7 +21,7 @@ export interface Project {
   _createdAt: string
   title: string
   description: string
-  images: any[]
+  images: { alt?: string; asset: { _ref: string; _type: string } }[]
   slug: {
     current: string
   }

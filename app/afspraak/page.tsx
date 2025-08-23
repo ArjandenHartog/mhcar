@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { CalendarDays, Clock, User, Mail, Phone, Car } from "lucide-react"
+import { CalendarDays, Clock, User, Phone, Car } from "lucide-react"
 import { format } from "date-fns"
 import { nl } from "date-fns/locale"
 

@@ -7,7 +7,7 @@ interface Project {
   _createdAt: string
   title: string
   description: string
-  images: any[]
+  images: { alt?: string; asset: { _ref: string; _type: string } }[]
   slug: {
     current: string
   }
@@ -139,7 +139,7 @@ export default async function Impressie() {
       <section className="py-20 bg-neutral-900 border-t border-gold">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-            Wilt u ook zo'n resultaat?
+            Wilt u ook zo&apos;n resultaat?
           </h2>
           <p className="text-xl mb-8 text-gray-300">
             Maak een afspraak en laat uw auto ook stralen!

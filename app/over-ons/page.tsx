@@ -21,7 +21,7 @@ export default function OverOns() {
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">Onze Verhaal</h2>
             <div className="prose prose-lg max-w-none">
               <p className="text-lg text-gray-300 mb-6">
-                MH Car Cleaning is ontstaan uit een gezamenlijke passie voor auto's en perfectie. 
+                MH Car Cleaning is ontstaan uit een gezamenlijke passie voor auto&apos;s en perfectie. 
                 Max en Henri hebben hun krachten gebundeld om de beste auto detailing service 
                 in Opheusden en omgeving te bieden.
               </p>
@@ -82,7 +82,7 @@ export default function OverOns() {
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-gray-300">
-                  Liefde voor auto's en trots op ons vakmanschap
+                  Liefde voor auto&apos;s en trots op ons vakmanschap
                 </CardDescription>
               </CardContent>
             </Card>
