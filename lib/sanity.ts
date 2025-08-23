@@ -85,7 +85,7 @@ export interface HomePage {
   }
   aboutSection: {
     title: string
-    description: any[]
+    description: unknown[]
     features: Array<{title: string, description: string}>
   }
   ctaSection: {

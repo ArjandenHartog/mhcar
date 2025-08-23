@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Phone, Mail, MapPin, Star } from "lucide-react"
+import { Phone, Mail, MapPin } from "lucide-react"
 import LocationMap from "@/components/location-map"
 import { getHomePage, getServices, getSiteSettings } from '@/lib/sanity'
 import ServiceIcon from '@/components/service-icon'

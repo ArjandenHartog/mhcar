@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Check, ArrowRight } from "lucide-react"
+import { Check } from "lucide-react"
 import { getServices, getSiteSettings } from '@/lib/sanity'
 import ServiceIcon from '@/components/service-icon'
 import PakkettenClient from './pakketten-client'

@@ -11,7 +11,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { CalendarDays, Clock, User, Phone, Car } from "lucide-react"
 import { format } from "date-fns"
 import { nl } from "date-fns/locale"
-import { cn } from "@/lib/utils"
 
 export default function AfspraakPage() {
   const [date, setDate] = useState<Date>()

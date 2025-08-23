@@ -1,4 +1,5 @@
-import { client, urlFor } from '@/lib/sanity'
+import { client } from '@/sanity/lib/client'
+import { urlFor } from '@/lib/sanity'
 import { Card, CardContent } from "@/components/ui/card"
 import Image from 'next/image'
 
