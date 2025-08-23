@@ -181,7 +181,30 @@ export default function AfspraakPage() {
                     onSelect={setDate}
                     disabled={(date) => date < new Date() || date.getDay() === 0}
                     locale={nl}
-                    className="rounded-md border border-neutral-600"
+                    className="rounded-md border border-neutral-600 shadow-sm bg-neutral-900"
+                    captionLayout="dropdown"
+                    classNames={{
+                      months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
+                      month: "space-y-4",
+                      caption: "flex justify-center pt-1 relative items-center text-white",
+                      caption_label: "text-sm font-medium text-white",
+                      nav: "space-x-1 flex items-center",
+                      nav_button: "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 text-white",
+                      nav_button_previous: "absolute left-1",
+                      nav_button_next: "absolute right-1",
+                      table: "w-full border-collapse space-y-1",
+                      head_row: "flex",
+                      head_cell: "text-neutral-400 rounded-md w-8 font-normal text-[0.8rem]",
+                      row: "flex w-full mt-2",
+                      cell: "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent",
+                      day: "h-8 w-8 p-0 font-normal aria-selected:opacity-100 text-white hover:bg-neutral-700 rounded-md transition-colors",
+                      day_selected: "bg-gold text-black hover:bg-yellow-600 hover:text-black focus:bg-gold focus:text-black",
+                      day_today: "bg-neutral-700 text-white",
+                      day_outside: "text-neutral-500 opacity-50",
+                      day_disabled: "text-neutral-500 opacity-50",
+                      day_range_middle: "aria-selected:bg-accent aria-selected:text-accent-foreground",
+                      day_hidden: "invisible",
+                    }}
                   />
                   {date && (
                     <p className="mt-4 text-sm text-gold">

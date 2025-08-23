@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navigation from '@/components/navigation'
+import Footer from '@/components/footer'
 
 export const metadata: Metadata = {
   title: "MH Car Cleaning - Auto Detailing Opheusden",
@@ -21,6 +22,7 @@ export default function RootLayout({
         <main className="min-h-screen">
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );
