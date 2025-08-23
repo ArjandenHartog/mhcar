@@ -1,47 +1,46 @@
-'use client'
-
-import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Check, Star, Droplets, Sparkles, Shield, ArrowRight } from "lucide-react"
+import { Check, ArrowRight } from "lucide-react"
+import { getServices, getSiteSettings } from '@/lib/sanity'
+import ServiceIcon from '@/components/service-icon'
+import PakkettenClient from './pakketten-client'
 
-interface Service {
-  id: string
-  name: string
-  description: string
-  price: number
-  duration: string
-  included: string[]
-  popular?: boolean
-}
+export default async function PakkettenPage() {
+  const [services, siteSettings] = await Promise.all([
+    getServices(),
+    getSiteSettings()
+  ])
 
-export default function PakkettenPage() {
-  const [selectedServices, setSelectedServices] = useState<string[]>([])
-
-  const services: Service[] = [
+  // Fallback services if none exist in Sanity
+  const fallbackServices = [
     {
-      id: 'exterieur',
+      _id: 'exterieur',
       name: 'Exterieur Detailing',
+      slug: { current: 'exterieur' },
       description: 'Grondige reiniging van de buitenkant van uw auto',
       price: 80,
       duration: '2-3 uur',
+      icon: 'droplets',
       included: [
         'Hand wash met premium shampoo',
-        'Velgen reiniging',
+        'Velgen reiniging', 
         'Banden behandeling',
         'Glas reiniging binnen en buiten',
         'Kunststof verzorging',
         'Droogdoeken afwerking'
-      ]
+      ],
+      category: 'exterieur'
     },
     {
-      id: 'interieur',
+      _id: 'interieur',
       name: 'Interieur Detailing',
+      slug: { current: 'interieur' },
       description: 'Professionele reiniging van het interieur',
       price: 80,
       duration: '2-3 uur',
+      icon: 'sparkles',
       included: [
         'Stofzuigen van alle oppervlakken',
         'Leder/stof reiniging',
@@ -49,14 +48,17 @@ export default function PakkettenPage() {
         'Ramen reiniging van binnen',
         'Deurpanelen verzorging',
         'Geur neutralisatie'
-      ]
+      ],
+      category: 'interieur'
     },
     {
-      id: 'coating',
+      _id: 'coating',
       name: 'Beschermende Coating',
+      slug: { current: 'coating' },
       description: 'Langdurige bescherming voor uw auto',
       price: 50,
       duration: '1 uur',
+      icon: 'shield',
       included: [
         'Keramische coating applicatie',
         'UV bescherming',
@@ -64,67 +66,40 @@ export default function PakkettenPage() {
         '6 maanden garantie',
         'Glans verbetering',
         'Makkelijker onderhoud'
-      ]
-    }
-  ]
-
-  const packages = [
-    {
-      id: 'basic-exterieur',
-      name: 'Exterieur Pakket',
-      services: ['exterieur'],
-      originalPrice: 80,
-      price: 80,
-      description: 'Perfect voor een grondige buitenreiniging',
-      icon: Droplets,
-      popular: false
+      ],
+      category: 'coating'
     },
     {
-      id: 'basic-interieur',
-      name: 'Interieur Pakket',
-      services: ['interieur'],
-      originalPrice: 80,
-      price: 80,
-      description: 'Uw interieur weer als nieuw',
-      icon: Sparkles,
-      popular: false
-    },
-    {
-      id: 'exterieur-coating',
-      name: 'Exterieur + Coating',
-      services: ['exterieur', 'coating'],
-      originalPrice: 130,
-      price: 100,
-      description: 'Reiniging met langdurige bescherming',
-      icon: Shield,
-      popular: true
-    },
-    {
-      id: 'complete',
+      _id: 'volledig',
       name: 'Volledig Pakket',
-      services: ['exterieur', 'interieur', 'coating'],
-      originalPrice: 210,
+      slug: { current: 'volledig' },
+      description: 'Complete behandeling van uw auto',
       price: 150,
-      description: 'De complete behandeling voor uw auto',
-      icon: Star,
-      popular: true
+      duration: '4-5 uur',
+      icon: 'star',
+      popular: true,
+      included: [
+        'Alle exterieur services',
+        'Alle interieur services',
+        'Beschermende coating',
+        'Premium afwerking',
+        'Kwaliteitscontrole'
+      ],
+      category: 'volledig'
     }
   ]
 
-  const toggleService = (serviceId: string) => {
-    setSelectedServices(prev => 
-      prev.includes(serviceId) 
-        ? prev.filter(id => id !== serviceId)
-        : [...prev, serviceId]
-    )
+  const activeServices = services.length > 0 ? services : fallbackServices
+  const contactInfo = siteSettings?.contact || {
+    phones: [
+      { name: "Max", number: "0613063822" },
+      { name: "Henri", number: "0643645299" }
+    ]
   }
 
-  const calculateCustomPrice = () => {
-    return selectedServices.reduce((total, serviceId) => {
-      const service = services.find(s => s.id === serviceId)
-      return total + (service?.price || 0)
-    }, 0)
-  }
+  // Group services by category for better organization
+  const popularServices = activeServices.filter(service => service.popular)
+  const regularServices = activeServices.filter(service => !service.popular)
 
   return (
     <div className="py-12 bg-black min-h-screen">
@@ -138,84 +113,119 @@ export default function PakkettenPage() {
         </div>
       </section>
 
-      {/* Package Selection */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Onze Pakketten</h2>
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              Professionele auto detailing services met transparante prijzen
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            {packages.map((pkg) => {
-              const IconComponent = pkg.icon
-              const includedServices = services.filter(service => pkg.services.includes(service.id))
-              
-              return (
+      {/* Popular Services */}
+      {popularServices.length > 0 && (
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Populaire Pakketten</h2>
+              <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+                Onze meest gekozen services voor optimale resultaten
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {popularServices.map((service) => (
                 <Card 
-                  key={pkg.id} 
-                  className={`text-center hover:shadow-lg transition-all duration-300 bg-neutral-900 ${
-                    pkg.popular 
-                      ? 'border-2 border-gold ring-2 ring-gold/20' 
-                      : 'border-neutral-700 hover:border-gold/50'
-                  }`}
+                  key={service._id}
+                  className="text-center hover:shadow-lg transition-all duration-300 bg-neutral-900 border-2 border-gold ring-2 ring-gold/20"
                 >
-                  {pkg.popular && (
-                    <div className="bg-gold text-black text-sm font-bold py-2 px-4 text-center">
-                      POPULAIR
-                    </div>
-                  )}
+                  <div className="bg-gold text-black text-sm font-bold py-2 px-4 text-center">
+                    POPULAIR
+                  </div>
                   <CardHeader>
-                    <IconComponent className={`h-12 w-12 mx-auto mb-4 ${pkg.popular ? 'text-gold' : 'text-gold'}`} />
-                    <CardTitle className="text-white">{pkg.name}</CardTitle>
-                    <CardDescription className="text-gray-300">{pkg.description}</CardDescription>
+                    <ServiceIcon 
+                      icon={service.icon} 
+                      className="h-12 w-12 mx-auto mb-4 text-gold" 
+                    />
+                    <CardTitle className="text-white">{service.name}</CardTitle>
+                    <CardDescription className="text-gray-300">{service.description}</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="text-center">
-                      <div className="flex items-center justify-center gap-2">
-                        {pkg.originalPrice > pkg.price && (
-                          <span className="text-lg text-gray-500 line-through">€{pkg.originalPrice},-</span>
-                        )}
-                        <span className="text-3xl font-bold text-gold">€{pkg.price},-</span>
-                      </div>
-                      {pkg.originalPrice > pkg.price && (
-                        <Badge className="bg-gold text-black mt-2">
-                          Bespaar €{pkg.originalPrice - pkg.price},-
-                        </Badge>
+                      <span className="text-3xl font-bold text-gold">€{service.price},-</span>
+                      {service.duration && (
+                        <p className="text-sm text-gray-400 mt-1">{service.duration}</p>
                       )}
                     </div>
                     
                     <div className="space-y-2">
-                      {includedServices.map((service) => (
-                        <div key={service.id} className="text-left">
-                          <p className="font-medium text-white">{service.name}</p>
-                          <p className="text-sm text-gray-400">{service.duration}</p>
-                        </div>
-                      ))}
+                      <ul className="space-y-1">
+                        {service.included.slice(0, 4).map((item, index) => (
+                          <li key={index} className="flex items-start gap-2 text-left text-gray-300">
+                            <Check className="h-4 w-4 text-gold mt-0.5 flex-shrink-0" />
+                            <span className="text-sm">{item}</span>
+                          </li>
+                        ))}
+                        {service.included.length > 4 && (
+                          <li className="text-sm text-gray-400">+ {service.included.length - 4} meer...</li>
+                        )}
+                      </ul>
                     </div>
                     
                     <Button 
                       asChild 
-                      className={`w-full ${
-                        pkg.popular 
-                          ? 'bg-gold text-black hover:bg-yellow-600' 
-                          : 'bg-neutral-800 text-white hover-bg-gold hover-text-black'
-                      }`}
+                      className="w-full bg-gold text-black hover:bg-yellow-600"
                     >
                       <Link href="/afspraak">Boek Nu</Link>
                     </Button>
                   </CardContent>
                 </Card>
-              )
-            })}
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* All Services */}
+      <section className={`py-20 ${popularServices.length > 0 ? 'bg-neutral-900' : ''}`}>
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
+              {popularServices.length > 0 ? 'Alle Services' : 'Onze Pakketten'}
+            </h2>
+            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+              Professionele auto detailing services met transparante prijzen
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {regularServices.map((service) => (
+              <Card 
+                key={service._id}
+                className="text-center hover:shadow-lg transition-all duration-300 bg-black border-neutral-700 hover:border-gold/50"
+              >
+                <CardHeader>
+                  <ServiceIcon 
+                    icon={service.icon} 
+                    className="h-12 w-12 mx-auto mb-4 text-gold" 
+                  />
+                  <CardTitle className="text-white">{service.name}</CardTitle>
+                  <CardDescription className="text-gray-300">{service.description}</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="text-center">
+                    <span className="text-3xl font-bold text-gold">€{service.price},-</span>
+                    {service.duration && (
+                      <p className="text-sm text-gray-400 mt-1">{service.duration}</p>
+                    )}
+                  </div>
+                  
+                  <Button 
+                    asChild 
+                    className="w-full bg-neutral-800 text-white hover-bg-gold hover-text-black"
+                  >
+                    <Link href="/afspraak">Boek Nu</Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Service Details */}
-      <section className="py-20 bg-neutral-900">
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Service Details</h2>
@@ -224,16 +234,31 @@ export default function PakkettenPage() {
             </p>
           </div>
           
-          <div className="grid lg:grid-cols-3 gap-8">
-            {services.map((service) => (
-              <Card key={service.id} className="bg-black border-neutral-700">
+          <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
+            {activeServices.map((service) => (
+              <Card key={service._id} className="bg-neutral-900 border-neutral-700">
                 <CardHeader>
-                  <CardTitle className="text-white">{service.name}</CardTitle>
+                  <div className="flex items-center gap-3">
+                    <ServiceIcon 
+                      icon={service.icon} 
+                      className="h-8 w-8 text-gold" 
+                    />
+                    <div>
+                      <CardTitle className="text-white text-left">{service.name}</CardTitle>
+                      {service.popular && (
+                        <Badge className="bg-gold text-black text-xs">POPULAIR</Badge>
+                      )}
+                    </div>
+                  </div>
                   <CardDescription className="text-gray-300">{service.description}</CardDescription>
                   <div className="flex items-center gap-4 text-sm text-gray-400">
-                    <span>€{service.price},-</span>
-                    <span>•</span>
-                    <span>{service.duration}</span>
+                    <span className="text-gold font-bold">€{service.price},-</span>
+                    {service.duration && (
+                      <>
+                        <span>•</span>
+                        <span>{service.duration}</span>
+                      </>
+                    )}
                   </div>
                 </CardHeader>
                 <CardContent>
@@ -253,75 +278,7 @@ export default function PakkettenPage() {
       </section>
 
       {/* Custom Package Builder */}
-      <section className="py-20">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Stel Uw Eigen Pakket Samen</h2>
-            <p className="text-lg text-gray-300">
-              Kies alleen de services die u nodig heeft
-            </p>
-          </div>
-          
-          <Card className="bg-neutral-900 border-neutral-700">
-            <CardHeader>
-              <CardTitle className="text-white">Custom Pakket Configurator</CardTitle>
-              <CardDescription className="text-gray-300">
-                Selecteer de gewenste services en zie direct de prijs
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {services.map((service) => (
-                  <div
-                    key={service.id}
-                    className={`border rounded-lg p-4 cursor-pointer transition-all ${
-                      selectedServices.includes(service.id)
-                        ? 'border-gold bg-gold/10'
-                        : 'border-neutral-600 hover:border-gold/50'
-                    }`}
-                    onClick={() => toggleService(service.id)}
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-medium text-white">{service.name}</h4>
-                      <span className="text-gold font-bold">€{service.price},-</span>
-                    </div>
-                    <p className="text-sm text-gray-400 mb-2">{service.description}</p>
-                    <p className="text-xs text-gray-500">{service.duration}</p>
-                  </div>
-                ))}
-              </div>
-              
-              {selectedServices.length > 0 && (
-                <div className="border-t border-neutral-600 pt-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <h4 className="text-lg font-bold text-white">Geselecteerde Services:</h4>
-                    <span className="text-2xl font-bold text-gold">€{calculateCustomPrice()},-</span>
-                  </div>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {selectedServices.map(serviceId => {
-                      const service = services.find(s => s.id === serviceId)
-                      return (
-                        <Badge key={serviceId} variant="secondary" className="bg-gold text-black">
-                          {service?.name}
-                        </Badge>
-                      )
-                    })}
-                  </div>
-                  <Button 
-                    asChild 
-                    className="w-full bg-gold text-black hover:bg-yellow-600"
-                  >
-                    <Link href="/afspraak">
-                      Boek Custom Pakket - €{calculateCustomPrice()},-
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-      </section>
+      <PakkettenClient services={activeServices} />
 
       {/* Additional Info */}
       <section className="py-20 bg-neutral-900">
@@ -354,18 +311,15 @@ export default function PakkettenPage() {
                   Heeft u vragen over onze pakketten of wilt u advies op maat?
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <a 
-                    href="tel:0613063822" 
-                    className="bg-gold text-black px-6 py-2 rounded-lg font-semibold hover:bg-yellow-600 transition duration-200"
-                  >
-                    Bel Max: 0613063822
-                  </a>
-                  <a 
-                    href="tel:0643645299" 
-                    className="bg-gold text-black px-6 py-2 rounded-lg font-semibold hover:bg-yellow-600 transition duration-200"
-                  >
-                    Bel Henri: 0643645299
-                  </a>
+                  {contactInfo.phones.map((phone, index) => (
+                    <a
+                      key={index}
+                      href={`tel:${phone.number}`}
+                      className="bg-gold text-black px-6 py-2 rounded-lg font-semibold hover:bg-yellow-600 transition duration-200"
+                    >
+                      Bel {phone.name}: {phone.number}
+                    </a>
+                  ))}
                 </div>
               </div>
             </CardContent>

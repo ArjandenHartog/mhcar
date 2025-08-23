@@ -1,10 +1,88 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Phone, Mail, MapPin, Star, Droplets, Sparkles, Shield } from "lucide-react"
+import { Phone, Mail, MapPin, Star } from "lucide-react"
 import LocationMap from "@/components/location-map"
+import { getHomePage, getServices, getSiteSettings } from '@/lib/sanity'
+import ServiceIcon from '@/components/service-icon'
 
-export default function Home() {
+export default async function Home() {
+  const [homePage, featuredServices, siteSettings] = await Promise.all([
+    getHomePage(),
+    getServices(true), // Get only featured services
+    getSiteSettings()
+  ])
+
+  // Fallback data
+  const defaultHero = {
+    title: "MH CAR CLEANING",
+    subtitle: "Professionele Auto Detailing Service in Opheusden en Omgeving",
+    description: "Wij maken uw auto grondig schoon met premium producten en professionele technieken. Van exterieur detailing tot interieur reiniging en beschermende coatings - uw auto verdient de beste zorg.",
+    primaryButton: { text: "Afspraak Maken", link: "/afspraak" },
+    secondaryButton: { text: "Bekijk Pakketten", link: "/pakketten" }
+  }
+
+  const defaultServicesSection = {
+    title: "Onze Services",
+    description: "Service is alleen op afspraak mogelijk, dit kan door contact met ons op te nemen."
+  }
+
+  const hero = homePage?.hero || defaultHero
+  const servicesSection = homePage?.servicesSection || defaultServicesSection
+
+  // Use featured services if available, otherwise use fallback
+  const services = featuredServices.length > 0 ? featuredServices : [
+    {
+      _id: "1",
+      name: "Exterieur Detailing",
+      slug: { current: "exterieur" },
+      shortDescription: "Grondige reiniging van de buitenkant van uw auto",
+      price: 80,
+      icon: "droplets",
+      included: [],
+      category: "exterieur"
+    },
+    {
+      _id: "2", 
+      name: "Interieur Detailing",
+      slug: { current: "interieur" },
+      shortDescription: "Dieptereiniging van het interieur",
+      price: 120,
+      icon: "sparkles",
+      included: [],
+      category: "interieur"
+    },
+    {
+      _id: "3",
+      name: "Coating Services", 
+      slug: { current: "coating" },
+      shortDescription: "Beschermende coating voor langdurige glans",
+      price: 200,
+      icon: "shield",
+      included: [],
+      category: "coating"
+    },
+    {
+      _id: "4",
+      name: "Volledig Pakket",
+      slug: { current: "volledig" },
+      shortDescription: "Complete behandeling van uw auto",
+      price: 280,
+      icon: "star",
+      popular: true,
+      included: [],
+      category: "volledig"
+    }
+  ]
+
+  const contactInfo = siteSettings?.contact || {
+    phones: [
+      { name: "Max", number: "0613063822" },
+      { name: "Henri", number: "0643645299" }
+    ],
+    email: "CarCleaningOpheusden@gmail.com",
+    address: "Opheusden, Nederland"
+  }
   return (
     <div>
       {/* Hero Section */}
@@ -12,20 +90,20 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 logo-font">
-              MH CAR CLEANING
+              {hero.title}
             </h1>
             <p className="text-xl md:text-2xl mb-4 max-w-3xl mx-auto">
-              Professionele Auto Detailing Service in Opheusden en Omgeving
+              {hero.subtitle}
             </p>
             <p className="text-lg mb-8 max-w-4xl mx-auto text-gray-300">
-              Wij maken uw auto grondig schoon met premium producten en professionele technieken. Van exterieur detailing tot interieur reiniging en beschermende coatings - uw auto verdient de beste zorg.
+              {hero.description}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-gold text-black hover:bg-yellow-600">
-                <Link href="/afspraak">Afspraak Maken</Link>
+                <Link href={hero.primaryButton.link}>{hero.primaryButton.text}</Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="border-gold text-gold hover-bg-gold hover-text-black">
-                <Link href="/pakketten">Bekijk Pakketten</Link>
+                <Link href={hero.secondaryButton.link}>{hero.secondaryButton.text}</Link>
               </Button>
             </div>
           </div>
@@ -36,64 +114,35 @@ export default function Home() {
       <section className="py-20 bg-neutral-900">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Onze Services</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">{servicesSection.title}</h2>
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              Service is alleen op afspraak mogelijk, dit kan door contact met ons op te nemen.
+              {servicesSection.description}
             </p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Card className="text-center hover:shadow-lg transition-shadow bg-black border-neutral-700">
-              <CardHeader>
-                <Droplets className="h-12 w-12 text-gold mx-auto mb-4" />
-                <CardTitle className="text-white">Exterieur Detailing</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-2xl font-bold text-gold mb-2">€80,-</p>
-                <CardDescription className="text-gray-300">
-                  Grondige reiniging van de buitenkant van uw auto
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center hover:shadow-lg transition-shadow bg-black border-neutral-700">
-              <CardHeader>
-                <Shield className="h-12 w-12 text-gold mx-auto mb-4" />
-                <CardTitle className="text-white">Exterieur + Coating</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-2xl font-bold text-gold mb-2">€100,-</p>
-                <CardDescription className="text-gray-300">
-                  Exterieur detailing inclusief beschermende coating
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center hover:shadow-lg transition-shadow bg-black border-neutral-700">
-              <CardHeader>
-                <Sparkles className="h-12 w-12 text-gold mx-auto mb-4" />
-                <CardTitle className="text-white">Interieur Detailing</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-2xl font-bold text-gold mb-2">€80,-</p>
-                <CardDescription className="text-gray-300">
-                  Professionele reiniging van het interieur
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center hover:shadow-lg transition-shadow bg-black border-2 border-gold">
-              <CardHeader>
-                <Star className="h-12 w-12 text-gold mx-auto mb-4" />
-                <CardTitle className="text-white">Volledig Pakket</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-2xl font-bold text-gold mb-2">€150,-</p>
-                <CardDescription className="text-gray-300">
-                  Complete service inclusief coating
-                </CardDescription>
-              </CardContent>
-            </Card>
+            {services.map((service) => (
+              <Card 
+                key={service._id}
+                className={`text-center hover:shadow-lg transition-shadow bg-black ${
+                  service.popular ? 'border-2 border-gold' : 'border-neutral-700'
+                }`}
+              >
+                <CardHeader>
+                  <ServiceIcon 
+                    icon={service.icon} 
+                    className="h-12 w-12 text-gold mx-auto mb-4" 
+                  />
+                  <CardTitle className="text-white">{service.name}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-2xl font-bold text-gold mb-2">€{service.price},-</p>
+                  <CardDescription className="text-gray-300">
+                    {service.shortDescription || service.description}
+                  </CardDescription>
+                </CardContent>
+              </Card>
+            ))}
           </div>
           
           <div className="text-center mt-8">
@@ -206,8 +255,14 @@ export default function Home() {
                 <CardTitle className="text-white">Telefoon</CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
-                <p className="text-gray-300"><strong>Max:</strong> <a href="tel:0613063822" className="text-gold hover:underline">0613063822</a></p>
-                <p className="text-gray-300"><strong>Henri:</strong> <a href="tel:0643645299" className="text-gold hover:underline">0643645299</a></p>
+                {contactInfo.phones.map((phone, index) => (
+                  <p key={index} className="text-gray-300">
+                    <strong>{phone.name}:</strong>{' '}
+                    <a href={`tel:${phone.number}`} className="text-gold hover:underline">
+                      {phone.number}
+                    </a>
+                  </p>
+                ))}
               </CardContent>
             </Card>
 
@@ -218,8 +273,8 @@ export default function Home() {
               </CardHeader>
               <CardContent>
                 <p>
-                  <a href="mailto:CarCleaningOpheusden@gmail.com" className="text-gold hover:underline">
-                    CarCleaningOpheusden@gmail.com
+                  <a href={`mailto:${contactInfo.email}`} className="text-gold hover:underline">
+                    {contactInfo.email}
                   </a>
                 </p>
               </CardContent>
@@ -231,7 +286,7 @@ export default function Home() {
                 <CardTitle className="text-white">Locatie</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-300">Opheusden</p>
+                <p className="text-gray-300">{contactInfo.address}</p>
               </CardContent>
             </Card>
           </div>
