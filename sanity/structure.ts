@@ -4,4 +4,52 @@ import type {StructureResolver} from 'sanity/structure'
 export const structure: StructureResolver = (S) =>
   S.list()
     .title('Content')
-    .items(S.documentTypeListItems())
+    .items([
+      // Settings (single instance)
+      S.listItem()
+        .title('Site Instellingen')
+        .id('siteSettings')
+        .child(
+          S.document()
+            .schemaType('siteSettings')
+            .documentId('site-settings')
+        ),
+      
+      S.divider(),
+      
+      // Pages
+      S.listItem()
+        .title('Homepage')
+        .schemaType('homePage')
+        .child(S.documentTypeList('homePage').title('Homepage')),
+      
+      S.listItem()
+        .title('Over Ons')
+        .schemaType('aboutPage')
+        .child(S.documentTypeList('aboutPage').title('Over Ons')),
+      
+      S.divider(),
+      
+      // Content
+      S.listItem()
+        .title('Services')
+        .schemaType('service')
+        .child(S.documentTypeList('service').title('Services')),
+        
+      S.listItem()
+        .title('Testimonials')
+        .schemaType('testimonial')
+        .child(S.documentTypeList('testimonial').title('Testimonials')),
+        
+      S.listItem()
+        .title('FAQ Items')
+        .schemaType('faqItem')
+        .child(S.documentTypeList('faqItem').title('FAQ Items')),
+        
+      S.divider(),
+      
+      // Other
+      ...S.documentTypeListItems().filter(
+        (listItem) => !['siteSettings', 'homePage', 'aboutPage', 'service', 'testimonial', 'faqItem'].includes(listItem.getId()!)
+      ),
+    ])

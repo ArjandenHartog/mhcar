@@ -32,7 +32,9 @@ export default {
         {
           name: 'description',
           title: 'Beschrijving',
-          type: 'text'
+          type: 'array',
+          of: [{type: 'block'}],
+          description: 'Uitgebreide hero beschrijving met opmaak'
         },
         {
           name: 'primaryButton',
@@ -132,6 +134,112 @@ export default {
             {name: 'text', title: 'Tekst', type: 'string'},
             {name: 'link', title: 'Link', type: 'string'}
           ]
+        }
+      ]
+    },
+    {
+      name: 'seoSettings',
+      title: 'SEO Instellingen',
+      type: 'object',
+      fields: [
+        {
+          name: 'seoTitle',
+          title: 'SEO Titel',
+          type: 'string',
+          description: 'Titel voor zoekmachines (max 60 tekens)',
+          validation: (Rule: any) => Rule.max(60)
+        },
+        {
+          name: 'seoDescription',
+          title: 'SEO Beschrijving',
+          type: 'text',
+          description: 'Beschrijving voor zoekmachines (max 160 tekens)',
+          validation: (Rule: any) => Rule.max(160)
+        },
+        {
+          name: 'keywords',
+          title: 'Zoekwoorden',
+          type: 'array',
+          of: [{type: 'string'}],
+          options: {
+            layout: 'tags'
+          }
+        }
+      ]
+    },
+    {
+      name: 'trustSignals',
+      title: 'Vertrouwenssignalen',
+      type: 'object',
+      fields: [
+        {
+          name: 'title',
+          title: 'Sectie Titel',
+          type: 'string'
+        },
+        {
+          name: 'items',
+          title: 'Vertrouwenssignalen',
+          type: 'array',
+          of: [
+            {
+              type: 'object',
+              fields: [
+                {name: 'title', title: 'Titel', type: 'string'},
+                {name: 'value', title: 'Waarde', type: 'string'},
+                {name: 'description', title: 'Beschrijving', type: 'string'},
+                {name: 'icon', title: 'Icon', type: 'string', description: 'Lucide icon naam'}
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      name: 'testimonialSection',
+      title: 'Klantreview Sectie',
+      type: 'object',
+      fields: [
+        {
+          name: 'title',
+          title: 'Sectie Titel',
+          type: 'string'
+        },
+        {
+          name: 'description',
+          title: 'Beschrijving',
+          type: 'text'
+        },
+        {
+          name: 'showFeaturedTestimonials',
+          title: 'Toon Uitgelichte Reviews',
+          type: 'boolean',
+          description: 'Automatisch uitgelichte reviews tonen'
+        }
+      ]
+    },
+    {
+      name: 'locationSection',
+      title: 'Locatie Sectie',
+      type: 'object',
+      fields: [
+        {
+          name: 'title',
+          title: 'Sectie Titel',
+          type: 'string'
+        },
+        {
+          name: 'description',
+          title: 'Beschrijving',
+          type: 'array',
+          of: [{type: 'block'}]
+        },
+        {
+          name: 'serviceAreas',
+          title: 'Werkgebied',
+          type: 'array',
+          of: [{type: 'string'}],
+          description: 'Lijst van plaatsen waar service wordt aangeboden'
         }
       ]
     }

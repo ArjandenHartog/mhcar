@@ -22,13 +22,29 @@ export default {
     {
       name: 'description',
       title: 'Beschrijving',
-      type: 'text'
+      type: 'array',
+      of: [{type: 'block'}],
+      description: 'Uitgebreide beschrijving met opmaak'
     },
     {
       name: 'shortDescription',
       title: 'Korte Beschrijving',
       type: 'string',
       description: 'Voor gebruik in cards en previews'
+    },
+    {
+      name: 'seoTitle',
+      title: 'SEO Titel',
+      type: 'string',
+      description: 'Titel voor zoekmachines (max 60 tekens)',
+      validation: (Rule: any) => Rule.max(60)
+    },
+    {
+      name: 'seoDescription',
+      title: 'SEO Beschrijving',
+      type: 'text',
+      description: 'Beschrijving voor zoekmachines (max 160 tekens)',
+      validation: (Rule: any) => Rule.max(160)
     },
     {
       name: 'price',
@@ -95,6 +111,66 @@ export default {
       title: 'Volgorde',
       type: 'number',
       description: 'Volgorde waarin services getoond worden'
+    },
+    {
+      name: 'detailedContent',
+      title: 'Gedetailleerde Content',
+      type: 'array',
+      of: [{type: 'block'}],
+      description: 'Uitgebreide informatie over deze service voor de service detail pagina'
+    },
+    {
+      name: 'processSteps',
+      title: 'Proces Stappen',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {name: 'title', title: 'Stap Titel', type: 'string'},
+            {name: 'description', title: 'Beschrijving', type: 'text'},
+            {name: 'duration', title: 'Duur', type: 'string'}
+          ]
+        }
+      ],
+      description: 'Stap-voor-stap beschrijving van het proces'
+    },
+    {
+      name: 'beforeAfterImages',
+      title: 'Voor & Na Foto\'s',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          options: {
+            hotspot: true
+          }
+        }
+      ]
+    },
+    {
+      name: 'faq',
+      title: 'Veelgestelde Vragen',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {name: 'question', title: 'Vraag', type: 'string'},
+            {name: 'answer', title: 'Antwoord', type: 'text'}
+          ]
+        }
+      ]
+    },
+    {
+      name: 'targetKeywords',
+      title: 'Doelzoekwoorden',
+      type: 'array',
+      of: [{type: 'string'}],
+      description: 'SEO zoekwoorden voor deze service',
+      options: {
+        layout: 'tags'
+      }
     }
   ],
   orderings: [
