@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { ArrowRight } from "lucide-react"
 import type { Service } from '@/lib/sanity'
+import { extractPlainText } from '@/lib/utils/text'
 
 interface PakkettenClientProps {
   services: Service[]
@@ -63,7 +64,7 @@ export default function PakkettenClient({ services }: PakkettenClientProps) {
                     <h4 className="font-medium text-white">{service.name}</h4>
                     <span className="text-gold font-bold">€{service.price},-</span>
                   </div>
-                  <p className="text-sm text-gray-400 mb-2">{service.description}</p>
+                  <p className="text-sm text-gray-400 mb-2">{extractPlainText(service.description)}</p>
                   {service.duration && (
                     <p className="text-xs text-gray-500">{service.duration}</p>
                   )}

@@ -53,11 +53,22 @@ export interface Navigation {
   items: NavigationItem[]
 }
 
+// Sanity block content types
+interface BlockChild {
+  text: string
+  _type?: string
+}
+
+interface Block {
+  _type: string
+  children?: BlockChild[]
+}
+
 export interface Service {
   _id: string
   name: string
   slug: { current: string }
-  description?: string
+  description?: string | Block[]
   shortDescription?: string
   price: number
   duration?: string
@@ -74,7 +85,7 @@ export interface HomePage {
   hero: {
     title: string
     subtitle: string
-    description: string
+    description: string | Block[]
     primaryButton: {text: string, link: string}
     secondaryButton: {text: string, link: string}
   }
@@ -85,7 +96,7 @@ export interface HomePage {
   }
   aboutSection: {
     title: string
-    description: unknown[]
+    description: string | Block[]
     features: Array<{title: string, description: string}>
   }
   ctaSection: {

@@ -6,6 +6,7 @@ import { Check } from "lucide-react"
 import { getServices, getSiteSettings } from '@/lib/sanity'
 import ServiceIcon from '@/components/service-icon'
 import PakkettenClient from './pakketten-client'
+import { extractPlainText } from '@/lib/utils/text'
 
 export default async function PakkettenPage() {
   const [services, siteSettings] = await Promise.all([
@@ -89,7 +90,13 @@ export default async function PakkettenPage() {
     }
   ]
 
-  const activeServices = services.length > 0 ? services : fallbackServices
+  // Process services to ensure description is always a string
+  const processedServices = (services.length > 0 ? services : fallbackServices).map(service => ({
+    ...service,
+    description: extractPlainText(service.description)
+  }))
+  
+  const activeServices = processedServices
   const contactInfo = siteSettings?.contact || {
     phones: [
       { name: "Max", number: "0613063822" },

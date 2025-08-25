@@ -5,6 +5,7 @@ import { Phone, Mail, MapPin } from "lucide-react"
 import LocationMap from "@/components/location-map"
 import { getHomePage, getServices, getSiteSettings } from '@/lib/sanity'
 import ServiceIcon from '@/components/service-icon'
+import { extractPlainText } from '@/lib/utils/text'
 
 export default async function Home() {
   const [homePage, featuredServices, siteSettings] = await Promise.all([
@@ -96,7 +97,7 @@ export default async function Home() {
               {hero.subtitle}
             </p>
             <p className="text-lg mb-8 max-w-4xl mx-auto text-gray-300">
-              {hero.description}
+              {extractPlainText(hero.description)}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-gold text-black hover:bg-yellow-600">
@@ -138,7 +139,7 @@ export default async function Home() {
                 <CardContent>
                   <p className="text-2xl font-bold text-gold mb-2">€{service.price},-</p>
                   <CardDescription className="text-gray-300">
-                    {service.shortDescription || service.description}
+                    {service.shortDescription || extractPlainText(service.description)}
                   </CardDescription>
                 </CardContent>
               </Card>
