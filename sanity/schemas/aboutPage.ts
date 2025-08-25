@@ -1,3 +1,5 @@
+import seoFields from './objects/seoFields'
+
 export default {
   name: 'aboutPage',
   title: 'Over Ons Pagina',
@@ -5,7 +7,7 @@ export default {
   __experimental_actions: [
     'create',
     'update',
-    // 'delete', 'duplicate'
+    // Disable delete/duplicate to prevent multiple about pages
   ],
   fields: [
     {
@@ -13,20 +15,6 @@ export default {
       title: 'Pagina Titel',
       type: 'string',
       initialValue: 'Over MH Car Cleaning'
-    },
-    {
-      name: 'seoTitle',
-      title: 'SEO Titel',
-      type: 'string',
-      description: 'Titel voor zoekmachines (max 60 tekens)',
-      validation: (Rule: {max: (n: number) => any}) => Rule.max(60)
-    },
-    {
-      name: 'seoDescription',
-      title: 'SEO Beschrijving',
-      type: 'text',
-      description: 'Beschrijving voor zoekmachines (max 160 tekens)',
-      validation: (Rule: {max: (n: number) => any}) => Rule.max(160)
     },
     {
       name: 'hero',
@@ -197,7 +185,9 @@ export default {
           ]
         }
       ]
-    }
+    },
+    // SEO instellingen
+    seoFields
   ],
   preview: {
     select: {

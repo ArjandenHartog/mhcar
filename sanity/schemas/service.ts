@@ -1,3 +1,5 @@
+import seoFields from './objects/seoFields'
+
 export default {
   name: 'service',
   title: 'Service',
@@ -20,31 +22,18 @@ export default {
       validation: (Rule: any) => Rule.required()
     },
     {
-      name: 'description',
-      title: 'Beschrijving',
-      type: 'array',
-      of: [{type: 'block'}],
-      description: 'Uitgebreide beschrijving met opmaak'
-    },
-    {
       name: 'shortDescription',
       title: 'Korte Beschrijving',
       type: 'string',
-      description: 'Voor gebruik in cards en previews'
+      description: 'Voor gebruik in cards en previews',
+      validation: (Rule: any) => Rule.required()
     },
     {
-      name: 'seoTitle',
-      title: 'SEO Titel',
-      type: 'string',
-      description: 'Titel voor zoekmachines (max 60 tekens)',
-      validation: (Rule: any) => Rule.max(60)
-    },
-    {
-      name: 'seoDescription',
-      title: 'SEO Beschrijving',
-      type: 'text',
-      description: 'Beschrijving voor zoekmachines (max 160 tekens)',
-      validation: (Rule: any) => Rule.max(160)
+      name: 'description',
+      title: 'Uitgebreide Beschrijving',
+      type: 'array',
+      of: [{type: 'block'}],
+      description: 'Volledige beschrijving met opmaak voor service detail pagina'
     },
     {
       name: 'price',
@@ -148,30 +137,8 @@ export default {
         }
       ]
     },
-    {
-      name: 'faq',
-      title: 'Veelgestelde Vragen',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {name: 'question', title: 'Vraag', type: 'string'},
-            {name: 'answer', title: 'Antwoord', type: 'text'}
-          ]
-        }
-      ]
-    },
-    {
-      name: 'targetKeywords',
-      title: 'Doelzoekwoorden',
-      type: 'array',
-      of: [{type: 'string'}],
-      description: 'SEO zoekwoorden voor deze service',
-      options: {
-        layout: 'tags'
-      }
-    }
+    // SEO instellingen
+    seoFields
   ],
   orderings: [
     {

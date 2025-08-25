@@ -106,6 +106,52 @@ export interface HomePage {
   }
 }
 
+export interface AboutPage {
+  title: string
+  hero: {
+    title: string
+    subtitle: string
+    description: Block[]
+    image?: { asset: { _ref: string; _type: string } }
+  }
+  story: {
+    title: string
+    content: Block[]
+  }
+  mission: {
+    title: string
+    content: Block[]
+  }
+  team: {
+    title: string
+    description: Block[]
+    members: Array<{
+      name: string
+      role: string
+      bio: string
+      phone?: string
+      email?: string
+      image?: { asset: { _ref: string; _type: string } }
+    }>
+  }
+  values: {
+    title: string
+    items: Array<{
+      title: string
+      description: string
+      icon: string
+    }>
+  }
+  experience: {
+    title: string
+    content: Block[]
+    highlights: Array<{
+      title: string
+      description: string
+    }>
+  }
+}
+
 export interface Project {
   _id: string
   _createdAt: string
@@ -208,6 +254,20 @@ export async function getHomePage(): Promise<HomePage | null> {
     servicesSection,
     aboutSection,
     ctaSection
+  }`
+  
+  return await client.fetch(query)
+}
+
+export async function getAboutPage(): Promise<AboutPage | null> {
+  const query = `*[_type == "aboutPage"][0] {
+    title,
+    hero,
+    story,
+    mission,
+    team,
+    values,
+    experience
   }`
   
   return await client.fetch(query)

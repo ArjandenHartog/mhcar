@@ -1,27 +1,38 @@
-import impressie from './impressie'
-import booking from './booking'
-import siteSettings from './siteSettings'
-import navigation from './navigation'
-import service from './service'
+// Object types
+import seoFields from './objects/seoFields'
+import buttonField from './objects/buttonField'
+
+// Document types - Pages
 import homePage from './homePage'
 import aboutPage from './aboutPage'
-import faqItem from './faqItem'
+
+// Document types - Content
+import service from './service'
+import impressie from './impressie'
 import testimonial from './testimonial'
+import faqItem from './faqItem'
 import contentBlock from './contentBlock'
+import booking from './booking'
+
+// Document types - Settings
+import siteSettings from './siteSettings'
+import navigation from './navigation'
 
 export const schemaTypes = [
-  // Core content
+  // Object types (must come first)
+  seoFields,
+  buttonField,
+  
+  // Pages
   homePage,
   aboutPage,
+  
+  // Content
   service,
-  
-  // Content types
   impressie,
-  contentBlock,
-  
-  // Interactive content
   testimonial,
   faqItem,
+  contentBlock,
   booking,
   
   // Settings
