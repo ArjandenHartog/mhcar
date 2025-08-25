@@ -19,14 +19,14 @@ export default {
       title: 'SEO Titel',
       type: 'string',
       description: 'Titel voor zoekmachines (max 60 tekens)',
-      validation: (Rule: any) => Rule.max(60)
+      validation: (Rule: {max: (n: number) => any}) => Rule.max(60)
     },
     {
       name: 'seoDescription',
       title: 'SEO Beschrijving',
       type: 'text',
       description: 'Beschrijving voor zoekmachines (max 160 tekens)',
-      validation: (Rule: any) => Rule.max(160)
+      validation: (Rule: {max: (n: number) => any}) => Rule.max(160)
     },
     {
       name: 'hero',
@@ -204,7 +204,7 @@ export default {
       title: 'title',
       heroTitle: 'hero.title'
     },
-    prepare(selection: any) {
+    prepare(selection: {title?: string, heroTitle?: string}) {
       const {title, heroTitle} = selection
       return {
         title: title || 'Over Ons Pagina',

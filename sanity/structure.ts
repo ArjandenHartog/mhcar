@@ -23,11 +23,6 @@ export const structure: StructureResolver = (S) =>
         .schemaType('homePage')
         .child(S.documentTypeList('homePage').title('Homepage')),
       
-      S.listItem()
-        .title('Over Ons')
-        .schemaType('aboutPage')
-        .child(S.documentTypeList('aboutPage').title('Over Ons')),
-      
       S.divider(),
       
       // Content
@@ -50,6 +45,6 @@ export const structure: StructureResolver = (S) =>
       
       // Other
       ...S.documentTypeListItems().filter(
-        (listItem) => !['siteSettings', 'homePage', 'aboutPage', 'service', 'testimonial', 'faqItem'].includes(listItem.getId()!)
+        (listItem) => !['siteSettings', 'homePage', 'service', 'testimonial', 'faqItem'].includes(listItem.getId()!)
       ),
     ])
