@@ -8,9 +8,9 @@ import ServiceIcon from '@/components/service-icon'
 import { extractPlainText } from '@/lib/utils/text'
 
 export default async function Home() {
-  const [homePage, featuredServices, siteSettings] = await Promise.all([
+  const [homePage, allServices, siteSettings] = await Promise.all([
     getHomePage(),
-    getServices(true), // Get only featured services
+    getServices(), // Get all services
     getSiteSettings()
   ])
 
@@ -36,8 +36,8 @@ export default async function Home() {
   }
   const servicesSection = homePage?.servicesSection || defaultServicesSection
 
-  // Use featured services if available, otherwise use fallback
-  const services = featuredServices.length > 0 ? featuredServices : [
+  // Use all services if available, otherwise use fallback
+  const services = allServices.length > 0 ? allServices : [
     {
       _id: "1",
       name: "Exterieur Detailing",
