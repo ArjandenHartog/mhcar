@@ -17,34 +17,8 @@ export const structure: StructureResolver = (S) =>
       
       S.divider(),
       
-      // Pages
-      S.listItem()
-        .title('Homepage')
-        .schemaType('homePage')
-        .child(S.documentTypeList('homePage').title('Homepage')),
-      
-      S.divider(),
-      
-      // Content
-      S.listItem()
-        .title('Services')
-        .schemaType('service')
-        .child(S.documentTypeList('service').title('Services')),
-        
-      S.listItem()
-        .title('Testimonials')
-        .schemaType('testimonial')
-        .child(S.documentTypeList('testimonial').title('Testimonials')),
-        
-      S.listItem()
-        .title('FAQ Items')
-        .schemaType('faqItem')
-        .child(S.documentTypeList('faqItem').title('FAQ Items')),
-        
-      S.divider(),
-      
-      // Other
+      // Only reference schemas we know exist
       ...S.documentTypeListItems().filter(
-        (listItem) => !['siteSettings', 'homePage', 'service', 'testimonial', 'faqItem'].includes(listItem.getId()!)
+        (listItem) => !['siteSettings'].includes(listItem.getId()!)
       ),
     ])
