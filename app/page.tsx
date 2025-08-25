@@ -28,7 +28,12 @@ export default async function Home() {
     description: "Service is alleen op afspraak mogelijk, dit kan door contact met ons op te nemen."
   }
 
-  const hero = homePage?.hero || defaultHero
+  const hero = {
+    ...defaultHero,
+    ...homePage?.hero,
+    primaryButton: homePage?.hero?.primaryButton || defaultHero.primaryButton,
+    secondaryButton: homePage?.hero?.secondaryButton || defaultHero.secondaryButton
+  }
   const servicesSection = homePage?.servicesSection || defaultServicesSection
 
   // Use featured services if available, otherwise use fallback
