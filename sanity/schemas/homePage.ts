@@ -114,6 +114,39 @@ export default {
         }
       ]
     },
+    {
+      name: 'showFeaturedServices',
+      title: 'Toon Uitgelichte Services',
+      type: 'boolean',
+      description: 'Of uitgelichte services getoond moeten worden op de homepage',
+      initialValue: true
+    },
+    {
+      name: 'ctaSection',
+      title: 'Call-to-Action Sectie',
+      type: 'object',
+      description: 'Oproep tot actie sectie onderaan de homepage',
+      fields: [
+        {
+          name: 'title',
+          title: 'Titel',
+          type: 'string',
+          description: 'Hoofdtitel van de CTA sectie'
+        },
+        {
+          name: 'description',
+          title: 'Beschrijving',
+          type: 'text',
+          description: 'Ondersteunende tekst voor de CTA'
+        },
+        {
+          name: 'button',
+          title: 'Knop',
+          type: 'button',
+          description: 'Primaire actieknop'
+        }
+      ]
+    },
     // SEO instellingen
     seoFields
   ],

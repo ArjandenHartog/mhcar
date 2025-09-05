@@ -138,9 +138,9 @@ export default {
     },
     prepare(selection: any) {
       const {title, rating, service, approved, featured, location} = selection
-      const stars = '⭐'.repeat(rating || 0)
-      const status = approved ? '✅' : '⏳'
-      const featuredIcon = featured ? '🌟' : ''
+      const stars = `${rating || 0} sterren`
+      const status = approved ? '(Goedgekeurd)' : '(Wachtend)'
+      const featuredIcon = featured ? ' (Uitgelicht)' : ''
       const locationText = location ? ` (${location})` : ''
       
       return {

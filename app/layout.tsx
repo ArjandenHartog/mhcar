@@ -3,6 +3,7 @@ import "./globals.css";
 import Navigation from '@/components/navigation'
 import Footer from '@/components/footer'
 import { getSiteSettings } from '@/lib/sanity'
+import DatabuddyClient from '@/components/DatabuddyClient'
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings()
@@ -77,6 +78,7 @@ export default function RootLayout({
         <main className="min-h-screen">
           {children}
         </main>
+        <DatabuddyClient />
         <Footer />
       </body>
     </html>

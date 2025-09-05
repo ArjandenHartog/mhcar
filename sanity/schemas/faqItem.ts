@@ -77,7 +77,7 @@ export default {
         technical: 'Technisch'
       }
       return {
-        title: title + (featured ? ' ⭐' : ''),
+        title: title + (featured ? ' (Uitgelicht)' : ''),
         subtitle: categoryLabels[category] || category
       }
     }

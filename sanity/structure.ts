@@ -6,7 +6,7 @@ export const structure: StructureResolver = (S) =>
     .items([
       // Pages
       S.listItem()
-        .title('📄 Pagina\'s')
+        .title('Paginas')
         .child(
           S.list()
             .title('Pagina\'s')
@@ -32,7 +32,7 @@ export const structure: StructureResolver = (S) =>
 
       // Content
       S.listItem()
-        .title('📝 Content')
+        .title('Content')
         .child(
           S.list()
             .title('Content')
@@ -48,13 +48,13 @@ export const structure: StructureResolver = (S) =>
       S.divider(),
 
       // Bookings
-      S.documentTypeListItem('booking').title('📅 Boekingen'),
+      S.documentTypeListItem('booking').title('Boekingen'),
 
       S.divider(),
 
       // Settings
       S.listItem()
-        .title('⚙️ Instellingen')
+        .title('Instellingen')
         .child(
           S.list()
             .title('Instellingen')

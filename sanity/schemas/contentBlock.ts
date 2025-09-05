@@ -140,7 +140,7 @@ export default {
     },
     prepare(selection: any) {
       const {title, category, context, active} = selection
-      const status = active ? '✅' : '❌'
+      const status = active ? '(Actief)' : '(Inactief)'
       const categoryLabels: { [key: string]: string } = {
         homepage: 'Homepage',
         services: 'Services',

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { client } from '@/sanity/lib/client'
+import { client, writeClient } from '@/sanity/lib/client'
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json()
     
-    const booking = await client.create({
+    const booking = await writeClient.create({
       _type: 'booking',
       name: body.name,
       email: body.email,

@@ -167,7 +167,7 @@ export default {
     prepare(selection: any) {
       const {title, price, duration, popular} = selection
       return {
-        title: title + (popular ? ' ⭐' : ''),
+        title: title + (popular ? ' (Populair)' : ''),
         subtitle: `€${price} • ${duration || 'Duur onbekend'}`
       }
     }
