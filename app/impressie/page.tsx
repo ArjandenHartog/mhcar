@@ -3,6 +3,9 @@ import { urlFor } from '@/lib/sanity'
 import { Card, CardContent } from "@/components/ui/card"
 import Image from 'next/image'
 
+// Revalidate elke 60 seconden
+export const revalidate = 60
+
 interface Project {
   _id: string
   _createdAt: string
@@ -95,10 +98,12 @@ export default async function Impressie() {
                     {project.images && project.images.length > 0 && (
                       <div className="aspect-video relative">
                         <Image
-                          src={urlFor(project.images[0]).url()}
+                          src={urlFor(project.images[0]).width(800).height(450).url()}
                           alt={project.images[0].alt || project.title}
                           fill
                           className="object-cover"
+                          unoptimized={false}
+                          priority={false}
                         />
                         <div className="absolute top-4 right-4">
                           <span className="bg-gold text-black px-3 py-1 rounded-full text-sm font-medium">
