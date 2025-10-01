@@ -180,8 +180,8 @@ export default async function Home() {
                     <CardTitle className="text-white">E-mail</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p>
-                      <a href={`mailto:${contactInfo.email}`} className="text-gold hover:underline">
+                    <p className="break-words">
+                      <a href={`mailto:${contactInfo.email}`} className="text-gold hover:underline break-all">
                         {contactInfo.email}
                       </a>
                     </p>
