@@ -59,7 +59,7 @@ export default async function Impressie() {
   }
 
   return (
-    <div className="py-12 bg-black min-h-screen">
+    <div className="bg-black min-h-screen">
       {/* Hero Section */}
       <section className="bg-black text-white py-20 border-b border-gold">
         <div className="max-w-7xl mx-auto px-4 text-center">

@@ -4,17 +4,38 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Phone, Mail, MapPin } from "lucide-react"
 import LocationMap from "@/components/location-map"
 import { getHomePage, getServices, getSiteSettings } from '@/lib/sanity'
+import { client } from '@/sanity/lib/client'
 import ServiceIcon from '@/components/service-icon'
 import { extractPlainText } from '@/lib/utils/text'
+import ProjectsCarousel from '@/components/projects-carousel'
 
 // Enable ISR with 60 second revalidation
 export const revalidate = 60
 
+async function getFeaturedProjects() {
+  const query = `*[_type == "impressie"] | order(publishedAt desc)[0...6] {
+    _id,
+    title,
+    description,
+    images,
+    slug,
+    category
+  }`
+
+  try {
+    return await client.fetch(query)
+  } catch (error) {
+    console.error('Error fetching projects:', error)
+    return []
+  }
+}
+
 export default async function Home() {
-  const [homePage, allServices, siteSettings] = await Promise.all([
+  const [homePage, allServices, siteSettings, featuredProjects] = await Promise.all([
     getHomePage(),
     getServices(), // Get all services
-    getSiteSettings()
+    getSiteSettings(),
+    getFeaturedProjects()
   ])
 
   // Get content from Sanity or use company info as fallback
@@ -142,9 +163,12 @@ export default async function Home() {
         </section>
       )}
 
+      {/* Projects Carousel */}
+      <ProjectsCarousel projects={featuredProjects} />
+
       {/* Contact Section */}
       {contactInfo && (
-        <section className="py-20 bg-black">
+        <section className="py-20 bg-black border-t border-gold">
           <div className="max-w-7xl mx-auto px-4">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Contact</h2>
