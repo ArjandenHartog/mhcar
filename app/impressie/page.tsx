@@ -102,8 +102,8 @@ export default async function Impressie() {
                           alt={project.images[0].alt || project.title}
                           fill
                           className="object-cover"
-                          unoptimized={false}
-                          priority={false}
+                          loading="lazy"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                         <div className="absolute top-4 right-4">
                           <span className="bg-gold text-black px-3 py-1 rounded-full text-sm font-medium">
