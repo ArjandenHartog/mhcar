@@ -78,6 +78,7 @@ export default function ProjectsCarousel({ projects }: ProjectsCarouselProps) {
                           fill
                           className="object-cover"
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          loading="eager"
                         />
                         <div className="absolute top-3 right-3">
                           <span className="bg-gold text-black px-3 py-1 rounded-full text-xs font-medium">
