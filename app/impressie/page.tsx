@@ -1,7 +1,7 @@
 import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/lib/sanity'
 import { Card, CardContent } from "@/components/ui/card"
-import Image from 'next/image'
+import ProjectImageCarousel from '@/components/project-image-carousel'
 
 // Revalidate elke 60 seconden
 export const revalidate = 60
@@ -96,22 +96,18 @@ export default async function Impressie() {
                 {projects.map((project) => (
                   <Card key={project._id} className="overflow-hidden hover:shadow-lg transition-shadow bg-neutral-900 border-neutral-700">
                     {project.images && project.images.length > 0 && (
-                      <div className="aspect-video relative">
-                        <Image
-                          src={urlFor(project.images[0]).width(800).height(450).url()}
-                          alt={project.images[0].alt || project.title}
-                          fill
-                          className="object-cover"
-                          loading="lazy"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      <div className="relative">
+                        <ProjectImageCarousel 
+                          images={project.images}
+                          title={project.title}
                         />
-                        <div className="absolute top-4 right-4">
+                        <div className="absolute top-4 right-4 z-10">
                           <span className="bg-gold text-black px-3 py-1 rounded-full text-sm font-medium">
                             {categoryLabels[project.category as keyof typeof categoryLabels] || project.category}
                           </span>
                         </div>
                         {project.featured && (
-                          <div className="absolute top-4 left-4">
+                          <div className="absolute top-4 left-4 z-10">
                             <span className="bg-yellow-500 text-black px-3 py-1 rounded-full text-sm font-medium">
                               Uitgelicht
                             </span>

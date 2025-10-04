@@ -4,9 +4,10 @@ import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity'
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
+import { useTouchSwipe } from '@/hooks/use-touch-swipe'
 
 interface Project {
   _id: string
@@ -21,6 +22,130 @@ interface Project {
 
 interface ProjectsCarouselProps {
   projects: Project[]
+}
+
+// Component voor afbeeldingen carousel binnen elk project
+function ProjectImagesCarousel({ 
+  images, 
+  title 
+}: { 
+  images: { alt?: string; asset: { _ref: string; _type: string } }[]
+  title: string 
+}) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+  if (!images || images.length === 0) {
+    return null
+  }
+
+  // Als er maar één afbeelding is, toon gewoon die afbeelding
+  if (images.length === 1) {
+    return (
+      <div className="aspect-video relative">
+        <Image
+          src={urlFor(images[0]).width(600).height(400).url()}
+          alt={images[0].alt || title}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          loading="eager"
+        />
+      </div>
+    )
+  }
+
+  const goToPrevious = () => {
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    )
+  }
+
+  const goToNext = () => {
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+    )
+  }
+
+  const goToSlide = (index: number) => {
+    setCurrentImageIndex(index)
+  }
+
+  // Touch/swipe functionaliteit
+  const { onTouchStart, onTouchMove, onTouchEnd } = useTouchSwipe({
+    onSwipeLeft: goToNext,
+    onSwipeRight: goToPrevious,
+    threshold: 50
+  })
+
+  // Keyboard navigatie
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowLeft') {
+      goToNext()
+    } else if (e.key === 'ArrowRight') {
+      goToPrevious()
+    }
+  }
+
+  return (
+    <div 
+      className="aspect-video relative group"
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="img"
+      aria-label={`Afbeelding carousel voor ${title}`}
+    >
+      {/* Hoofdafbeelding */}
+      <Image
+        src={urlFor(images[currentImageIndex]).width(600).height(400).url()}
+        alt={images[currentImageIndex].alt || title}
+        fill
+        className="object-cover transition-opacity duration-300"
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        loading="eager"
+      />
+
+      {/* Navigatie knoppen - alleen zichtbaar bij hover */}
+      <button
+        onClick={goToPrevious}
+        className="absolute left-1 top-1/2 -translate-y-1/2 bg-black/50 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-black/70"
+        aria-label="Vorige afbeelding"
+      >
+        <ChevronLeft className="h-3 w-3" />
+      </button>
+      
+      <button
+        onClick={goToNext}
+        className="absolute right-1 top-1/2 -translate-y-1/2 bg-black/50 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-black/70"
+        aria-label="Volgende afbeelding"
+      >
+        <ChevronRight className="h-3 w-3" />
+      </button>
+
+      {/* Indicatoren */}
+      <div className="absolute bottom-1 left-1/2 -translate-x-1/2 flex space-x-1">
+        {images.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => goToSlide(index)}
+            className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
+              index === currentImageIndex 
+                ? 'bg-gold scale-110' 
+                : 'bg-white/50 hover:bg-white/70'
+            }`}
+            aria-label={`Ga naar afbeelding ${index + 1}`}
+          />
+        ))}
+      </div>
+
+      {/* Afbeelding teller */}
+      <div className="absolute top-1 right-1 bg-black/50 text-white px-1.5 py-0.5 rounded text-xs">
+        {currentImageIndex + 1}/{images.length}
+      </div>
+    </div>
+  )
 }
 
 export default function ProjectsCarousel({ projects }: ProjectsCarouselProps) {
@@ -71,16 +196,12 @@ export default function ProjectsCarousel({ projects }: ProjectsCarouselProps) {
                 >
                   <div className="bg-neutral-900 rounded-lg overflow-hidden border border-neutral-700 hover:border-gold transition-colors h-full">
                     {project.images && project.images.length > 0 && (
-                      <div className="aspect-video relative">
-                        <Image
-                          src={urlFor(project.images[0]).width(600).height(400).url()}
-                          alt={project.images[0].alt || project.title}
-                          fill
-                          className="object-cover"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          loading="eager"
+                      <div className="relative">
+                        <ProjectImagesCarousel 
+                          images={project.images}
+                          title={project.title}
                         />
-                        <div className="absolute top-3 right-3">
+                        <div className="absolute top-3 right-3 z-10">
                           <span className="bg-gold text-black px-3 py-1 rounded-full text-xs font-medium">
                             {categoryLabels[project.category] || project.category}
                           </span>
