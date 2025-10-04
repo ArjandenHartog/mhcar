@@ -1,5 +1,4 @@
 import { client } from '@/sanity/lib/client'
-import { urlFor } from '@/lib/sanity'
 import { Card, CardContent } from "@/components/ui/card"
 import ProjectImageCarousel from '@/components/project-image-carousel'
 

@@ -19,6 +19,38 @@ export default function ProjectImageCarousel({
 }: ProjectImageCarouselProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
+  const goToPrevious = () => {
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    )
+  }
+
+  const goToNext = () => {
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+    )
+  }
+
+  const goToSlide = (index: number) => {
+    setCurrentImageIndex(index)
+  }
+
+  // Touch/swipe functionaliteit - altijd aangeroepen
+  const { onTouchStart, onTouchMove, onTouchEnd } = useTouchSwipe({
+    onSwipeLeft: goToNext,
+    onSwipeRight: goToPrevious,
+    threshold: 50
+  })
+
+  // Keyboard navigatie
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowLeft') {
+      goToPrevious()
+    } else if (e.key === 'ArrowRight') {
+      goToNext()
+    }
+  }
+
   if (!images || images.length === 0) {
     return null
   }
@@ -37,38 +69,6 @@ export default function ProjectImageCarousel({
         />
       </div>
     )
-  }
-
-  const goToPrevious = () => {
-    setCurrentImageIndex((prevIndex) => 
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
-    )
-  }
-
-  const goToNext = () => {
-    setCurrentImageIndex((prevIndex) => 
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
-    )
-  }
-
-  const goToSlide = (index: number) => {
-    setCurrentImageIndex(index)
-  }
-
-  // Touch/swipe functionaliteit
-  const { onTouchStart, onTouchMove, onTouchEnd } = useTouchSwipe({
-    onSwipeLeft: goToNext,
-    onSwipeRight: goToPrevious,
-    threshold: 50
-  })
-
-  // Keyboard navigatie
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'ArrowLeft') {
-      goToPrevious()
-    } else if (e.key === 'ArrowRight') {
-      goToNext()
-    }
   }
 
   return (
