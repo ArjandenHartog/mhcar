@@ -1,8 +1,8 @@
 import { client } from '@/sanity/lib/client'
 import { sanityFetch } from '@/sanity/lib/live'
-import imageUrlBuilder from '@sanity/image-url'
+import { createImageUrlBuilder } from '@sanity/image-url'
 
-const builder = imageUrlBuilder(client)
+const builder = createImageUrlBuilder(client)
 
 export const urlFor = (source: { asset: { _ref: string; _type: string } }) => {
   return builder.image(source)
