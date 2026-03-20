@@ -1,4 +1,5 @@
 import { client } from '@/sanity/lib/client'
+import { sanityFetch } from '@/sanity/lib/live'
 import imageUrlBuilder from '@sanity/image-url'
 
 const builder = imageUrlBuilder(client)

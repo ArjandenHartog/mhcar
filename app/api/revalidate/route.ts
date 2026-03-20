@@ -59,18 +59,33 @@ export async function POST(request: NextRequest) {
       
       case 'navigation':
         // Navigation affects all pages
+        revalidatePath('/', 'layout')
+        break
+
+      case 'impressie':
+        revalidatePath('/')
+        revalidatePath('/impressie')
+        break
+
+      case 'testimonial':
         revalidatePath('/')
         revalidatePath('/over-ons')
-        revalidatePath('/pakketten')
-        revalidatePath('/afspraak')
         break
-      
+
+      case 'faqItem':
+        revalidatePath('/pakketten')
+        revalidatePath('/over-ons')
+        break
+
+      case 'booking':
+        // Bookings don't affect public pages
+        break
+
       default:
-        // For other document types or manual revalidation
         revalidatePath('/')
-        if (payload.slug?.current) {
-          revalidatePath(`/${payload.slug.current}`)
-        }
+        revalidatePath('/impressie')
+        revalidatePath('/over-ons')
+        revalidatePath('/pakketten')
     }
 
     return NextResponse.json({ 
