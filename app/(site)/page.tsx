@@ -9,9 +9,6 @@ import ServiceIcon from '@/components/service-icon'
 import { extractPlainText } from '@/lib/utils/text'
 import ProjectsCarousel from '@/components/projects-carousel'
 
-// Enable ISR with 60 second revalidation
-export const revalidate = 60
-
 async function getFeaturedProjects() {
   const query = `*[_type == "impressie"] | order(publishedAt desc)[0...6] {
     _id,
@@ -21,13 +18,7 @@ async function getFeaturedProjects() {
     slug,
     category
   }`
-
-  try {
-    return await client.fetch(query)
-  } catch (error) {
-    console.error('Error fetching projects:', error)
-    return []
-  }
+  return await client.fetch(query)
 }
 
 export default async function Home() {

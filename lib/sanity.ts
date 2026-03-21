@@ -1,5 +1,4 @@
 import { client } from '@/sanity/lib/client'
-import { sanityFetch } from '@/sanity/lib/live'
 import { createImageUrlBuilder } from '@sanity/image-url'
 
 const builder = createImageUrlBuilder(client)
@@ -190,7 +189,6 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
     socialMedia,
     footer
   }`
-  
   return await client.fetch(query)
 }
 
@@ -203,7 +201,6 @@ export async function getNavigation(): Promise<Navigation | null> {
       order
     }
   }`
-  
   return await client.fetch(query)
 }
 
@@ -224,7 +221,6 @@ export async function getServices(featured?: boolean): Promise<Service[]> {
     category,
     order
   }`
-  
   return await client.fetch(query)
 }
 
@@ -244,7 +240,6 @@ export async function getServiceBySlug(slug: string): Promise<Service | null> {
     category,
     order
   }`
-  
   return await client.fetch(query, { slug })
 }
 
@@ -256,7 +251,6 @@ export async function getHomePage(): Promise<HomePage | null> {
     aboutSection,
     ctaSection
   }`
-  
   return await client.fetch(query)
 }
 
@@ -270,6 +264,5 @@ export async function getAboutPage(): Promise<AboutPage | null> {
     values,
     experience
   }`
-  
   return await client.fetch(query)
 }

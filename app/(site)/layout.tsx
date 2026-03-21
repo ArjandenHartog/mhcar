@@ -3,7 +3,6 @@ import Navigation from '@/components/navigation'
 import Footer from '@/components/footer'
 import { getSiteSettings } from '@/lib/sanity'
 import DatabuddyClient from '@/components/DatabuddyClient'
-import { SanityLive } from '@/sanity/lib/live'
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings()
@@ -76,7 +75,6 @@ export default function SiteLayout({
       </main>
       <DatabuddyClient />
       <Footer />
-      <SanityLive />
     </>
   );
 }

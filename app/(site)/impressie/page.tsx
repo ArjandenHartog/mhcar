@@ -2,9 +2,6 @@ import { client } from '@/sanity/lib/client'
 import { Card, CardContent } from "@/components/ui/card"
 import ProjectImageCarousel from '@/components/project-image-carousel'
 
-// Revalidate elke 60 seconden
-export const revalidate = 60
-
 interface Project {
   _id: string
   _createdAt: string
@@ -31,20 +28,7 @@ async function getProjects(): Promise<Project[]> {
     featured,
     publishedAt
   }`
-  
-  try {
-    // Check if Sanity is properly configured
-    const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'ktpg5qcd'
-    if (projectId === 'your-project-id') {
-      console.log('Sanity not configured, returning empty array')
-      return []
-    }
-    
-    return await client.fetch(query)
-  } catch (error) {
-    console.error('Error fetching projects:', error)
-    return []
-  }
+  return await client.fetch(query)
 }
 
 export default async function Impressie() {
