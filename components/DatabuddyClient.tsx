@@ -1,6 +1,6 @@
 'use client'
 
-import { Databuddy } from '@databuddy/sdk'
+import { Databuddy } from '@databuddy/sdk/react'
 
 export default function DatabuddyClient() {
   return (
@@ -10,15 +10,9 @@ export default function DatabuddyClient() {
       trackAttributes={true}
       trackOutgoingLinks={true}
       trackInteractions={true}
-      trackEngagement={true}
-      trackScrollDepth={true}
-      trackExitIntent={true}
-      trackBounceRate={true}
       trackWebVitals={true}
       trackErrors={true}
       enableBatching={true}
     />
   )
 }
-
-
