@@ -21,6 +21,8 @@ ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=$NEXT_PUBLIC_SUPABASE_ANON_KEY
 RUN npm run build
 
 FROM node:22-alpine
+# tini as PID 1: passes SIGTERM on to node and reaps child processes.
+RUN apk add --no-cache tini
 WORKDIR /app
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 HOSTNAME=0.0.0.0 PORT=8080
 COPY --from=build --chown=node:node /app/.next/standalone ./
@@ -28,6 +30,8 @@ COPY --from=build --chown=node:node /app/.next/static ./.next/static
 COPY --from=build --chown=node:node /app/public ./public
 # The server runs with a read-only root: Next.js keeps its cache in /tmp.
 RUN rm -rf .next/cache && ln -s /tmp/next-cache .next/cache
+# Infaris Cloud runs the image as uid 10001 with a read-only root; the files stay world-readable.
 USER node
 EXPOSE 8080
+ENTRYPOINT ["/sbin/tini", "-g", "--"]
 CMD ["sh", "-c", "mkdir -p /tmp/next-cache && exec node server.js"]
